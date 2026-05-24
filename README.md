@@ -4,7 +4,7 @@ Official implementation of **CAUNet**, a unified anomaly utilization framework f
 
 > **Paper**: *Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization*  
 > **Journal**: *The Visual Computer*
-> **DOI**: *10.5281/zenodo.20365977*
+> **DOI**: *[10.5281/zenodo.20365977](https://doi.org/10.5281/zenodo.20365977)*
 
 ## Overview
 
