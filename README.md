@@ -1,8 +1,8 @@
-# CAUNet: Complete Anomaly Utilization Network for Industrial Anomaly Detection
+# Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization
 
 Official implementation of **CAUNet** for industrial anomaly detection.
 
-> **Paper**: *CAUNet: Complete Anomaly Utilization Network for Industrial Anomaly Detection*  
+> **Paper**: *Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization*  
 > **Journal**: *The Visual Computer*
 
 ---
@@ -15,7 +15,7 @@ Industrial anomaly detection aims to identify defective regions and abnormal sam
 2. Anomaly knowledge is difficult to transfer effectively into the normal feature space.
 3. Feature responses are insufficiently adaptive to spatially varying defects.
 
-To address these challenges, we propose **CAUNet (Complete Anomaly Utilization Network)**, a unified anomaly utilization framework that establishes a complete utilization chain for pseudo anomalies. The proposed framework improves anomaly generation, anomaly feature transfer, and adaptive anomaly perception simultaneously.
+To address these challenges, we propose **CAUNet**, a unified anomaly utilization framework that establishes a complete utilization chain for pseudo anomalies. The proposed framework improves anomaly generation, anomaly feature transfer, and adaptive anomaly perception simultaneously.
 
 ---
 
