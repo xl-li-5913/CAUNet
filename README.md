@@ -1,4 +1,4 @@
-# CAUNet: Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization
+# Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization
 
 Official implementation of **CAUNet**, a unified anomaly utilization framework for industrial visual defect detection and localization.
 
