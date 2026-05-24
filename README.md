@@ -1,53 +1,106 @@
-# Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization
+# CAUNet: Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization
 
-Official implementation of **CAUNet** for industrial anomaly detection.
+Official implementation of **CAUNet**, a unified anomaly utilization framework for industrial visual defect detection and localization.
 
 > **Paper**: *Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization*  
 > **Journal**: *The Visual Computer*
 
 ---
 
-## Overview
+## Highlights
 
-Industrial anomaly detection aims to identify defective regions and abnormal samples under a one-class learning setting where only normal training samples are available. Existing pseudo-anomaly-based methods usually rely on manually designed perturbations to construct anomaly supervision. However, these methods often suffer from three limitations:
-
-1. Pseudo anomalies lack structural awareness.
-2. Anomaly knowledge is difficult to transfer effectively into the normal feature space.
-3. Feature responses are insufficiently adaptive to spatially varying defects.
-
-To address these challenges, we propose **CAUNet**, a unified anomaly utilization framework that establishes a complete utilization chain for pseudo anomalies. The proposed framework improves anomaly generation, anomaly feature transfer, and adaptive anomaly perception simultaneously.
+- Unified anomaly utilization framework for industrial anomaly detection
+- Structure-aware pseudo anomaly generation
+- Statistics-guided anomaly knowledge transfer
+- Position-adaptive anomaly amplification
+- Strong performance on MVTec AD, VisA, and MPDD
+- Robust localization capability for fine-grained and irregular defects
 
 ---
 
-## Framework
+## Overview
 
-### Main Components
+Industrial anomaly detection plays an important role in automated quality inspection and manufacturing safety. However, real industrial anomalies are scarce and difficult to annotate, which limits supervised learning methods in practical applications.
 
-CAUNet mainly contains the following modules:
+Recent pseudo-anomaly-based methods attempt to alleviate this issue by constructing synthetic anomalies on normal samples. Nevertheless, most existing approaches only use pseudo anomalies as local perturbation augmentation and fail to establish a complete anomaly utilization pipeline. As a result, anomaly information cannot be effectively transferred and consolidated during feature learning.
 
-- **Structure-aware pseudo anomaly generation**  
-  Generates pseudo defects with richer structural diversity and more realistic spatial distributions.
+To address these limitations, we propose **CAUNet**, a unified anomaly utilization framework that systematically organizes:
 
-- **Feature-level anomaly transfer mechanism**  
-  Transfers anomaly knowledge from pseudo anomaly space into the normal feature representation space.
+- structure-aware anomaly generation,
+- anomaly knowledge transfer,
+- and adaptive anomaly response enhancement
 
-- **Adaptive anomaly response module**  
-  Enhances spatial sensitivity to heterogeneous anomalies and improves localization capability.
+into a progressive and reusable industrial defect inspection pipeline.
 
-- **Multi-scale feature interaction**  
-  Aggregates semantic and detailed information across different feature resolutions.
+Unlike conventional pseudo-anomaly methods, CAUNet continuously models anomaly information in both the data space and feature space, enabling more discriminative anomaly representation learning and more accurate defect localization.
+
+---
+
+## Framework Architecture
+
+The proposed CAUNet mainly consists of three key modules:
+
+### 1. Fuzzy-guided Pseudo Anomaly Generation (FPAG)
+
+FPAG constructs structure-aware pseudo anomalies through fuzzy-guided anomaly injection.
+
+Main characteristics:
+
+- Models anomaly degree using pixel-level fuzzy memberships
+- Preserves structural continuity of industrial objects
+- Reduces the distribution gap between synthetic anomalies and real defects
+- Generates more realistic spatial defect patterns
+
+---
+
+### 2. Statistics-guided Anomaly Knowledge Transfer (SAKT)
+
+SAKT transfers anomaly-related information from the data space into the feature representation space.
+
+Main characteristics:
+
+- Models anomaly distribution statistics
+- Dynamically modulates feature channels
+- Enhances anomaly-aware feature learning
+- Improves anomaly knowledge propagation and consolidation
+
+---
+
+### 3. Position-adaptive Dynamic Anomaly Amplification (PADAA)
+
+PADAA enhances responses to fine-grained and spatially varying anomalies.
+
+Main characteristics:
+
+- Dynamically enhances local anomaly responses
+- Adapts to irregular anomaly structures
+- Improves subtle defect localization
+- Strengthens spatial sensitivity to heterogeneous anomalies
 
 ---
 
 ## Experimental Results
 
-CAUNet achieves competitive performance on multiple industrial anomaly detection benchmarks, including:
+### MVTec AD
 
-- MVTec AD
+| Metric | Result |
+|---|---|
+| Image-level AUROC | 99.4 |
+| Pixel-level AUROC | 98.2 |
+| AUPRO | 94.9 |
+
+CAUNet achieves state-of-the-art performance on MVTec AD and demonstrates strong localization capability for fine-grained industrial defects.
+
+---
+
+### Additional Benchmarks
+
+The proposed framework also demonstrates strong generalization capability on:
+
 - VisA
 - MPDD
 
-The proposed framework demonstrates strong generalization capability and superior localization performance compared with existing methods.
+compared with existing industrial anomaly detection methods.
 
 ---
 
@@ -55,29 +108,29 @@ The proposed framework demonstrates strong generalization capability and superio
 
 ```text
 CAUNet
-│── data/                       # Dataset directory
-│── datasets/                   # Dataset loading scripts
-│── models/                     # Network architectures
-│── modules/                    # Core modules of CAUNet
-│── utils/                      # Utility functions
-│── checkpoints/                # Saved model weights
-│── train.py                    # Training script
-│── test.py                     # Evaluation script
-│── requirements.txt            # Python dependencies
-│── README.md                   # Project description
+│── data/                        # Dataset directory
+│── datasets/                    # Dataset loading scripts
+│── models/                      # Network architectures
+│── modules/                     # Core modules of CAUNet
+│── utils/                       # Utility functions
+│── checkpoints/                 # Saved model weights
+│── train.py                     # Training script
+│── test.py                      # Evaluation script
+│── requirements.txt             # Python dependencies
+│── README.md                    # Project description
 ```
 
 ---
 
-## Dependencies
+## Environment
 
-### Environment
+### Requirements
 
 - Python >= 3.9
 - PyTorch >= 2.0
 - CUDA >= 11.8
 
-### Main Libraries
+### Main Dependencies
 
 ```bash
 torch
@@ -88,8 +141,8 @@ scikit-learn
 scipy
 timm
 Pillow
-tqdm
 matplotlib
+tqdm
 ```
 
 Install dependencies using:
@@ -104,11 +157,11 @@ pip install -r requirements.txt
 
 ### MVTec AD
 
-Download the dataset from:
+Download:
 
 https://www.mvtec.com/company/research/datasets/mvtec-ad
 
-Organize the dataset as follows:
+Directory structure:
 
 ```text
 data/
@@ -119,15 +172,19 @@ data/
     └── ...
 ```
 
+---
+
 ### VisA
 
-Download the dataset from:
+Download:
 
 https://github.com/amazon-science/spot-diff
 
+---
+
 ### MPDD
 
-Download the dataset from:
+Download:
 
 https://github.com/stepanje/MPDD
 
@@ -135,7 +192,7 @@ https://github.com/stepanje/MPDD
 
 ## Training
 
-Run the following command to train CAUNet:
+Train CAUNet using:
 
 ```bash
 python train.py \
@@ -149,7 +206,7 @@ python train.py \
 
 ## Testing
 
-Evaluate the trained model using:
+Evaluate a trained model using:
 
 ```bash
 python test.py \
@@ -170,32 +227,16 @@ The following metrics are used for evaluation:
 
 ---
 
-## Key Algorithmic Details
-
-### 1. Pseudo Anomaly Construction
-
-CAUNet generates structurally diverse pseudo anomalies to simulate realistic industrial defects. Compared with simple handcrafted perturbations, the proposed strategy introduces richer spatial structures and improves anomaly representation learning.
-
-### 2. Feature-level Anomaly Utilization
-
-Instead of only using pseudo anomalies as pixel-level supervision, CAUNet further transfers anomaly-aware information into feature representations, enabling more discriminative anomaly perception.
-
-### 3. Adaptive Spatial Response
-
-The adaptive anomaly response mechanism dynamically adjusts feature responses according to spatially varying anomaly distributions, improving localization accuracy for irregular defects.
-
----
-
 ## Visualization
 
-You can visualize anomaly maps and localization results during testing.
+The framework supports visualization of:
 
-Example outputs include:
+- Input images
+- Ground-truth masks
+- Predicted anomaly maps
+- Binary segmentation results
 
-- Input image
-- Ground-truth mask
-- Predicted anomaly map
-- Binary segmentation result
+These visualizations help analyze localization quality and anomaly response behavior.
 
 ---
 
@@ -203,20 +244,20 @@ Example outputs include:
 
 To reproduce the reported results:
 
-1. Prepare the datasets correctly.
-2. Install all dependencies.
-3. Use the provided training configuration.
-4. Evaluate using the released checkpoints.
+1. Prepare the datasets correctly
+2. Install all required dependencies
+3. Train the model using the provided settings
+4. Evaluate using released checkpoints
 
 ---
 
 ## Citation
 
-If you find this repository useful for your research, please cite our paper:
+If you find this repository useful for your research, please cite:
 
 ```bibtex
 @article{CAUNet2026,
-  title={CAUNet: Complete Anomaly Utilization Network for Industrial Anomaly Detection},
+  title={Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization},
   author={Author Names},
   journal={The Visual Computer},
   year={2026}
@@ -227,9 +268,7 @@ If you find this repository useful for your research, please cite our paper:
 
 ## Acknowledgements
 
-This project benefits from previous studies on industrial anomaly detection and pseudo anomaly learning.
-
-We sincerely thank the authors of:
+We sincerely thank the authors of the following works and datasets:
 
 - PatchCore
 - STPM
@@ -249,4 +288,8 @@ This repository is released for academic research purposes only.
 
 ## Contact
 
-For questions or collaborations, please open an issue or contact the authors through GitHub.
+For questions, discussions, or collaborations, please open an issue on GitHub.
+
+Project page:
+
+https://github.com/xl-li-5913/CAUNet.git
