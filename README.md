@@ -5,19 +5,6 @@ Official implementation of **CAUNet**, a unified anomaly utilization framework f
 > **Paper**: *Unified Anomaly Utilization Framework for Industrial Visual Defect Detection and Localization*  
 > **Journal**: *The Visual Computer*
 
----
-
-## Highlights
-
-- Unified anomaly utilization framework for industrial anomaly detection
-- Structure-aware pseudo anomaly generation
-- Statistics-guided anomaly knowledge transfer
-- Position-adaptive anomaly amplification
-- Strong performance on MVTec AD, VisA, and MPDD
-- Robust localization capability for fine-grained and irregular defects
-
----
-
 ## Overview
 
 Industrial anomaly detection plays an important role in automated quality inspection and manufacturing safety. However, real industrial anomalies are scarce and difficult to annotate, which limits supervised learning methods in practical applications.
