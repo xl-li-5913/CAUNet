@@ -182,11 +182,7 @@ https://github.com/stepanje/MPDD
 Train CAUNet using:
 
 ```bash
-python train.py \
-    --dataset mvtec \
-    --data_path ./data/mvtec \
-    --batch_size 8 \
-    --epochs 300
+python train_CAUNet.py
 ```
 
 ---
@@ -196,9 +192,7 @@ python train.py \
 Evaluate a trained model using:
 
 ```bash
-python test.py \
-    --dataset mvtec \
-    --checkpoint ./checkpoints/model.pth
+python inference.py
 ```
 
 ---
@@ -210,7 +204,6 @@ The following metrics are used for evaluation:
 - Image-level AUROC
 - Pixel-level AUROC
 - AUPRO
-- F1-score
 
 ---
 
@@ -252,31 +245,3 @@ If you find this repository useful for your research, please cite:
 ```
 
 ---
-
-## Acknowledgements
-
-We sincerely thank the authors of the following works and datasets:
-
-- PatchCore
-- STPM
-- DRAEM
-- RD4AD
-- MVTec AD
-- VisA
-- MPDD
-
----
-
-## License
-
-This repository is released for academic research purposes only.
-
----
-
-## Contact
-
-For questions, discussions, or collaborations, please open an issue on GitHub.
-
-Project page:
-
-https://github.com/xl-li-5913/CAUNet.git
