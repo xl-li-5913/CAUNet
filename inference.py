@@ -21,7 +21,7 @@ def setup_seed(seed):
 
 def get_args():
     parser = ArgumentParser()
-    parser.add_argument('--checkpoint_folder', default = './RD++_result_MPDD', type=str)
+    parser.add_argument('--checkpoint_folder', default = './result_mvtec', type=str)
     parser.add_argument('--image_size', default = 256, type=int)
     parser.add_argument('--classes', nargs="+", default=['bracket_black', 'bracket_brown', 'bracket_white', 'connector', 'metal_plate', 'tubes'])
     pars = parser.parse_args()
