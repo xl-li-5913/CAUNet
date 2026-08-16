@@ -186,6 +186,43 @@ class FPAG(torch.utils.data.Dataset):
         img_noise = self.transform(img_noise)
         return img_normal, img_noise, os.path.basename(img_path)
 
+class MVTecDataset_train_original(torch.utils.data.Dataset):
+    def __init__(self, root, transform):
+        self.img_path = root
+        self.simplexNoise = Simplex_CLASS()
+        self.transform = transform
+        # load dataset
+        self.img_paths = self.load_dataset()  # self.labels => good : 0, anomaly : 1
+
+    def load_dataset(self):
+        img_paths = glob.glob(os.path.join(self.img_path, 'good') + "/*.png")
+        return img_paths
+
+    def __len__(self):
+        return len(self.img_paths)
+
+    def __getitem__(self, idx):
+        img_path = self.img_paths[idx]
+        img = cv2.imread(img_path)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img / 255., (256, 256))
+        ## Normal
+        img_normal = self.transform(img)
+        ## simplex_noise
+        size = 256
+        h_noise = np.random.randint(10, int(size // 8))
+        w_noise = np.random.randint(10, int(size // 8))
+        start_h_noise = np.random.randint(1, size - h_noise)
+        start_w_noise = np.random.randint(1, size - w_noise)
+        noise_size = (h_noise, w_noise)
+        simplex_noise = self.simplexNoise.rand_3d_octaves((3, *noise_size), 6, 0.6)
+        init_zero = np.zeros((256, 256, 3))
+        init_zero[start_h_noise: start_h_noise + h_noise, start_w_noise: start_w_noise + w_noise,
+        :] = 0.2 * simplex_noise.transpose(1, 2, 0)
+        img_noise = img + init_zero
+        img_noise = self.transform(img_noise)
+        return img_normal, img_noise, img_path.split('/')[-1]
+
 
 class MVTecDataset_test(torch.utils.data.Dataset):
     def __init__(self, root, transform, gt_transform):
@@ -255,9 +292,6 @@ if __name__ == "__main__":
     import numpy as np
     import matplotlib.pyplot as plt
 
-    # =========================
-    # 1. 构造 transform
-    # =========================
     data_transform, _ = get_data_transforms(256, 256)
 
     root_dir = os.path.join(
@@ -269,37 +303,26 @@ if __name__ == "__main__":
         transform=data_transform
     )
 
-    # =========================
-    # 2. 取一个样本
-    # =========================
     img_normal, img_noise, name = dataset[0]
 
     # tensor -> numpy
     img_normal = img_normal.permute(1, 2, 0).cpu().numpy()
     img_noise = img_noise.permute(1, 2, 0).cpu().numpy()
 
-    # =========================
-    # 3. 反归一化（用于显示）
-    # =========================
     mean = np.array([0.485, 0.456, 0.406])
     std = np.array([0.229, 0.224, 0.225])
 
     img_normal_vis = np.clip(img_normal * std + mean, 0.0, 1.0)
     img_noise_vis = np.clip(img_noise * std + mean, 0.0, 1.0)
 
-    # =========================
-    # 4. 构造注入 mask
-    # =========================
+
     diff = np.abs(img_noise_vis - img_normal_vis)
     diff_gray = np.mean(diff, axis=2)
 
-    # 自适应阈值
+
     thr = np.percentile(diff_gray, 98)
     mask = diff_gray > thr
 
-    # =========================
-    # 5. 可视化
-    # =========================
     plt.figure(figsize=(12, 4))
 
     plt.subplot(1, 3, 1)
